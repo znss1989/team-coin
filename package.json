@@ -4,7 +4,8 @@
   "description": "A crowd funding app built with Ethereum smart contracts.",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "dev": "next dev"
   },
   "author": "lei-wu",
   "license": "ISC",
