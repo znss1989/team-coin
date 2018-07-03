@@ -26,10 +26,11 @@ class CampaignsIndex extends React.Component {
   render() {
     return (
       <Layout>
-        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.css"></link>
-        <h2>Open Campaigns</h2>
-        {this.renderCampaigns()}
-        <Button content="Create Campaign" icon="add" primary />
+        <Button floated="right" content="Create Campaign" icon="add" primary />
+        <div>
+          <h3>Open Campaigns</h3>
+          {this.renderCampaigns()}
+        </div>
       </Layout>
     );
   }
