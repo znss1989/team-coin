@@ -3,7 +3,7 @@ import {Form, Input, Button, Message} from 'semantic-ui-react';
 
 import getCampaignAt from '../../../ethereum/campaign';
 import web3 from '../../../ethereum/web3';
-import {Router} from '../../../routes';
+import {Router, Link} from '../../../routes';
 import Layout from '../../../components/Layout';
 
 class RequestNew extends React.Component {
@@ -77,6 +77,9 @@ class RequestNew extends React.Component {
     return (
       <Layout>
         <h3>Create a Request</h3>
+        <Link route={`/campaigns/${this.props.address}/requests`}>
+          <a>Back</a>
+        </Link>
         <Form onSubmit={event => {
             this.onSubmit(event);
           }}
