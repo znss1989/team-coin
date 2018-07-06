@@ -9,7 +9,9 @@ class ContributeForm extends React.Component {
   constructor() {
     super();
     this.state = {
-      value: ''
+      value: '',
+      errMessage: '',
+      loading: false
     };
     this.onInputChange = this.onInputChange.bind(this);
   }
@@ -23,6 +25,10 @@ class ContributeForm extends React.Component {
   async onSubmit(event) {
     event.preventDefault();
     const campaign = getCampaignAt(this.props.address);
+    this.setState({
+      loading: true,
+      errMessage: ''
+    });
     try { 
       const accounts = await web3.eth.getAccounts();
       await campaign.methods.contribute().send({
@@ -31,15 +37,23 @@ class ContributeForm extends React.Component {
       });
       Router.replaceRoute(`/campaigns/${this.props.address}`);
     } catch (err) {
-
+      this.setState({
+        errMessage: err.message
+      });
     }
+    this.setState({
+      loading: false,
+      value: ''
+    });
   }
 
   render() {
     return (
       <Form onSubmit={event => {
-        this.onSubmit(event);
-      }}>
+          this.onSubmit(event);
+        }}
+        error={!!this.state.errMessage}
+      >
         <Form.Field>
           <Label>Amount to contribute</Label>
           <Input label="ether" labelPosition="right" 
@@ -49,7 +63,8 @@ class ContributeForm extends React.Component {
             }}
           />
         </Form.Field>
-        <Button primary>Contribute</Button>
+        <Message error header="Oops!" content={this.state.errMessage} />
+        <Button primary loading={this.state.loading}>Contribute</Button>
       </Form>
     );
   }
