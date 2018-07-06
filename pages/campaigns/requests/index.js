@@ -9,13 +9,13 @@ class RequestIndex extends React.Component {
   static async getInitialProps(props) {
     const {address} = props.query;
     const campaign = getCampaignAt(address);
-    const requestsCount = await campaign.methods.getRequestCount().call();
+    const requestCount = await campaign.methods.getRequestCount().call();
     const requests = await Promise.all(
       Array(parseInt(requestCount)).fill().map((element, index) => {
         return campaign.methods.requests(index).call();
       })
     );
-    return {address, requests, requestsCount};
+    return {address, requests, requestCount};
   }
 
   render() {
