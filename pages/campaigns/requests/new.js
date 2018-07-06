@@ -3,7 +3,7 @@ import {Form, Input, Button, Message} from 'semantic-ui-react';
 
 import getCampaignAt from '../../../ethereum/campaign';
 import web3 from '../../../ethereum/web3';
-import {Link, Router} from '../../../routes';
+import {Router} from '../../../routes';
 import Layout from '../../../components/Layout';
 
 class RequestNew extends React.Component {
@@ -12,7 +12,9 @@ class RequestNew extends React.Component {
     this.state = {
       value: '',
       description: '',
-      recipient: ''
+      recipient: '',
+      errMessage: '',
+      loading: false
     };
     this.onDescriptionChange = this.onDescriptionChange.bind(this);
     this.onValueChange = this.onValueChange.bind(this);
@@ -45,10 +47,11 @@ class RequestNew extends React.Component {
 
   async onSubmit(event) {
     event.preventDefault();
-    console.log("Onsubmit running...");
-    console.log(this.props.address);
+    this.setState({
+      loading: true,
+      errMessage: ''
+    });
     const campaign = getCampaignAt(this.props.address);
-    console.log(campaign);
     const { description, value, recipient } = this.state;
     try {
       const accounts = await web3.eth.getAccounts();
@@ -59,9 +62,15 @@ class RequestNew extends React.Component {
         .send({
           from: accounts[0]
         });
+      Router.pushRoute(`/campaigns/${this.props.address}/requests`);
     } catch (err) {
-      console.log(err);
+      this.setState({
+        errMessage: err.message,
+      });
     }
+    this.setState({
+      loading: false
+    });
   }
 
   render() {
@@ -69,8 +78,10 @@ class RequestNew extends React.Component {
       <Layout>
         <h3>Create a Request</h3>
         <Form onSubmit={event => {
-          this.onSubmit(event);
-        }}>
+            this.onSubmit(event);
+          }}
+          error={!!this.state.errMessage}
+        >
           <Form.Field>
             <label>Description</label>
             <Input 
@@ -98,7 +109,8 @@ class RequestNew extends React.Component {
               }}
             />
           </Form.Field>
-          <Button primary>Create</Button>
+          <Message error header="Oops!" content={this.state.errMessage} />
+          <Button primary loading={this.state.loading}>Create</Button>
         </Form>
       </Layout>
     );
