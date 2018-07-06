@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button} from 'semantic-ui-react';
+import {Button, Table} from 'semantic-ui-react';
 
 import {Link} from '../../../routes';
 import Layout from '../../../components/Layout';
@@ -27,6 +27,19 @@ class RequestIndex extends React.Component {
             <Button primary>Add Request</Button>
           </a>
         </Link>
+        <Table>
+          <Table.Header>
+            <Table.Row>
+              <Table.HeaderCell>ID</Table.HeaderCell>
+              <Table.HeaderCell>Description</Table.HeaderCell>
+              <Table.HeaderCell>Amount</Table.HeaderCell>
+              <Table.HeaderCell>Recipient</Table.HeaderCell>
+              <Table.HeaderCell>Approval Count</Table.HeaderCell>
+              <Table.HeaderCell>Approve</Table.HeaderCell>
+              <Table.HeaderCell>Finalize</Table.HeaderCell>
+            </Table.Row>
+          </Table.Header>
+        </Table>
       </Layout>
     );
   }
