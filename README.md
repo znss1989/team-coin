@@ -5,6 +5,7 @@
 Users can lauch campaigns for fund raising of their projects. Inside a project, each request for money transfer would be managed and over-watched by all contributors by voting.
 
 ## Get started
-1. ```npm run build```
-2. ```node server.js```
-3. Run the application in Chrome, with MetaMask plug in.
+1. ```npm install```
+2. ```npm run build```
+3. ```node server.js```
+4. Run the application in Chrome, with MetaMask plug in.
